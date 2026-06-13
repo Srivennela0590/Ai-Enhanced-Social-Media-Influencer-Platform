@@ -7,9 +7,9 @@ load_dotenv()
 class Config:
     SECRET_KEY = os.getenv('SECRET_KEY', 'influenceai-flask-secret-key-2024')
     SQLALCHEMY_DATABASE_URI = os.getenv(
-        'DATABASE_URL',
-        'mysql+pymysql://root:root@localhost:3306/influenceai'
-    )
+    'DATABASE_URL',
+    'sqlite:///influenceai.db'
+)
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ENGINE_OPTIONS = {
         'pool_size': 10,
