@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposal Generator — InfluenceAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>:root{--primary:#6C4DF6;--bg:#F8F9FC;}body{background:var(--bg);font-family:'Segoe UI',sans-serif;}.gradient-text{background:linear-gradient(135deg,var(--primary),#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.btn-primary{background:linear-gradient(135deg,var(--primary),#8B5CF6);border:none;}.glass-card{background:#fff;border:1px solid #E2E8F0;border-radius:16px;padding:1.5rem;}.output-box{background:#F1F5F9;border-radius:12px;padding:1.5rem;min-height:300px;white-space:pre-wrap;font-size:0.9rem;line-height:1.7;}</style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-white border-bottom px-4"><a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-stars" style="color:var(--primary)"></i> <span class="gradient-text">InfluenceAI</span></a><div><a href="brand_dashboard.html" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-left"></i> Dashboard</a></div></nav>
+    <div class="container py-4">
+        <h4 class="fw-bold mb-1"><i class="bi bi-file-earmark-text text-primary"></i> Proposal & Outreach Generator</h4>
+        <p class="text-muted mb-4">Generate professional proposals and outreach messages</p>
+        <ul class="nav nav-tabs mb-4" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#proposalTab">Proposal</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#outreachTab">Outreach</button></li>
+        </ul>
+        <div class="tab-content">
+            <!-- Proposal -->
+            <div class="tab-pane fade show active" id="proposalTab">
+                <div class="row g-4">
+                    <div class="col-lg-5"><div class="glass-card">
+                        <div class="row g-3">
+                            <div class="col-6"><label class="form-label small">Influencer Name</label><input class="form-control" id="pName" value="Alex Rivera"></div>
+                            <div class="col-6"><label class="form-label small">Niche</label><input class="form-control" id="pNiche" value="Technology"></div>
+                            <div class="col-6"><label class="form-label small">Followers</label><input type="number" class="form-control" id="pFollowers" value="125000"></div>
+                            <div class="col-6"><label class="form-label small">Rate ($)</label><input type="number" class="form-control" id="pRate" value="500"></div>
+                            <div class="col-12"><label class="form-label small">Campaign Title</label><input class="form-control" id="pCampaign" value="Summer Product Launch"></div>
+                            <div class="col-12"><label class="form-label small">Description</label><textarea class="form-control" id="pDesc" rows="2">Showcase our new AI-powered gadget line</textarea></div>
+                            <div class="col-12"><button class="btn btn-primary w-100" id="pBtn" onclick="genProposal()"><i class="bi bi-stars"></i> Generate Proposal</button></div>
+                        </div>
+                    </div></div>
+                    <div class="col-lg-7"><div class="glass-card"><h6 class="fw-bold mb-3">Generated Proposal <span class="badge bg-light text-muted" id="pSource"></span></h6><div class="output-box" id="pOutput">Fill in the details and click Generate.</div><small class="text-muted" id="pWords"></small></div></div>
+                </div>
+            </div>
+            <!-- Outreach -->
+            <div class="tab-pane fade" id="outreachTab">
+                <div class="row g-4">
+                    <div class="col-lg-5"><div class="glass-card">
+                        <div class="row g-3">
+                            <div class="col-12"><label class="form-label small">Message Type</label><select class="form-select" id="oType"><option value="initial">Initial Outreach</option><option value="follow_up">Follow-Up</option><option value="negotiation">Negotiation</option></select></div>
+                            <div class="col-6"><label class="form-label small">Brand Name</label><input class="form-control" id="oBrand" value="TechVibe Inc."></div>
+                            <div class="col-6"><label class="form-label small">Influencer Name</label><input class="form-control" id="oInf" value="Emma Wilson"></div>
+                            <div class="col-6"><label class="form-label small">Influencer Niche</label><input class="form-control" id="oNiche" value="Fashion & Beauty"></div>
+                            <div class="col-6"><label class="form-label small">Followers</label><input type="number" class="form-control" id="oFollowers" value="245000"></div>
+                            <div class="col-12"><label class="form-label small">Campaign Title</label><input class="form-control" id="oCampaign" value="Summer Product Launch"></div>
+                            <div class="col-12"><label class="form-label small">Goal</label><input class="form-control" id="oGoal" value="Increase brand awareness among 18-34 demographic"></div>
+                            <div class="col-12"><button class="btn btn-primary w-100" id="oBtn" onclick="genOutreach()"><i class="bi bi-stars"></i> Generate Message</button></div>
+                        </div>
+                    </div></div>
+                    <div class="col-lg-7"><div class="glass-card"><h6 class="fw-bold mb-3">Generated Message <span class="badge bg-light text-muted" id="oSource"></span></h6><div class="p-3 mb-3 rounded" style="background:rgba(108,77,246,0.05);border:1px solid rgba(108,77,246,0.15)"><small class="text-muted">Subject:</small><br><strong id="oSubject"></strong></div><div class="output-box" id="oOutput">Fill in the details and click Generate.</div><small class="text-muted" id="oWords"></small></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const API='http://127.0.0.1:5000';const token=localStorage.getItem('influenceai_token');const headers={'Content-Type':'application/json','Authorization':`Bearer ${token}`};
+        async function genProposal(){
+            const btn=document.getElementById('pBtn');btn.disabled=true;btn.innerHTML='<span class="spinner-border spinner-border-sm"></span> Generating...';
+            try{const res=await fetch(`${API}/api/ai/proposal`,{method:'POST',headers,body:JSON.stringify({influencerName:document.getElementById('pName').value,influencerNiche:document.getElementById('pNiche').value,influencerFollowers:parseInt(document.getElementById('pFollowers').value),campaignTitle:document.getElementById('pCampaign').value,campaignCategory:'Technology',campaignDescription:document.getElementById('pDesc').value,proposedRate:parseInt(document.getElementById('pRate').value)})});const data=await res.json();
+                if(data.success){document.getElementById('pOutput').textContent=data.data.proposal;document.getElementById('pWords').textContent=`${data.data.wordCount} words`;document.getElementById('pSource').textContent=data.data.source==='gemini'?'✦ Gemini':'⚡ Template';}
+            }catch(e){document.getElementById('pOutput').textContent='Failed. Ensure backend is running.';}
+            btn.disabled=false;btn.innerHTML='<i class="bi bi-stars"></i> Generate Proposal';
+        }
+        async function genOutreach(){
+            const btn=document.getElementById('oBtn');btn.disabled=true;btn.innerHTML='<span class="spinner-border spinner-border-sm"></span> Generating...';
+            try{const res=await fetch(`${API}/api/ai/outreach`,{method:'POST',headers,body:JSON.stringify({brandName:document.getElementById('oBrand').value,influencerName:document.getElementById('oInf').value,influencerNiche:document.getElementById('oNiche').value,influencerFollowers:parseInt(document.getElementById('oFollowers').value),campaignTitle:document.getElementById('oCampaign').value,campaignGoal:document.getElementById('oGoal').value,messageType:document.getElementById('oType').value})});const data=await res.json();
+                if(data.success){document.getElementById('oSubject').textContent=data.data.subject;document.getElementById('oOutput').textContent=data.data.message;document.getElementById('oWords').textContent=`${data.data.wordCount} words`;document.getElementById('oSource').textContent=data.data.source==='gemini'?'✦ Gemini':'⚡ Template';}
+            }catch(e){document.getElementById('oOutput').textContent='Failed.';}
+            btn.disabled=false;btn.innerHTML='<i class="bi bi-stars"></i> Generate Message';
+        }
+    </script>
+</body>
+</html>

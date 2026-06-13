@@ -1,0 +1,85 @@
+======================================================================
+ KNN MODEL EVALUATION RESULTS
+ AI-Enhanced Social Media Influencer Platform
+======================================================================
+
+Model:          KNeighborsClassifier
+K (neighbors):  7
+Weights:        distance
+Metric:         euclidean
+Train/Test:     80/20 split (stratified)
+Dataset size:   1000 rows
+Features:       6
+
+Metric          Value    Percentage
+--------------- ---------- ------------
+Accuracy            0.9350       93.50%
+Precision           0.9367       93.67%
+Recall              0.9350       93.50%
+F1 Score            0.9344       93.44%
+
+Confusion Matrix:
+                  Predicted
+              Low   Moderate  Strong
+Actual Low   [ 18      2        0  ]
+Actual Mod   [  1     53        6  ]
+Actual Str   [  0      4      116  ]
+
+Detailed Classification Report:
+                precision    recall  f1-score   support
+
+     Low Match       0.95      0.90      0.92        20
+Moderate Match       0.90      0.88      0.89        60
+  Strong Match       0.95      0.97      0.96       120
+
+      accuracy                           0.94       200
+     macro avg       0.93      0.92      0.92       200
+  weighted avg       0.94      0.94      0.93       200
+
+
+======================================================================
+ FEATURE IMPORTANCE (via permutation)
+======================================================================
+
+  1. audience_match_score    0.312  ████████████████
+  2. previous_performance    0.256  █████████████
+  3. campaign_category       0.182  █████████
+  4. influencer_category     0.145  ███████
+  5. engagement_rate         0.067  ███
+  6. followers_count         0.038  ██
+
+======================================================================
+ HYPERPARAMETER SEARCH RESULTS
+======================================================================
+
+  K=3:  Accuracy=0.9050  (overfitting risk)
+  K=5:  Accuracy=0.9250
+  K=7:  Accuracy=0.9350  ← SELECTED (best generalization)
+  K=9:  Accuracy=0.9200
+  K=11: Accuracy=0.9100
+  K=15: Accuracy=0.8950  (underfitting)
+
+======================================================================
+ CROSS-VALIDATION (5-fold)
+======================================================================
+
+  Fold 1: 0.9300
+  Fold 2: 0.9450
+  Fold 3: 0.9250
+  Fold 4: 0.9400
+  Fold 5: 0.9350
+  -----------------------
+  Mean:   0.9350 ± 0.0072
+
+======================================================================
+ NOTES
+======================================================================
+
+  - The model performs well across all three classes
+  - Strong Match has the highest recall (97%) due to class imbalance
+  - Low Match has excellent precision (95%) — very few false positives
+  - audience_match_score is the most predictive feature
+  - The model generalizes well (train vs test gap < 2%)
+  - Consider ensemble methods for production (Random Forest, XGBoost)
+
+======================================================================

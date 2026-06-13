@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InfluenceAI — AI-Enhanced Influencer Marketing Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        :root { --primary: #6C4DF6; --secondary: #8B5CF6; --bg: #F8F9FC; --text: #1E293B; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); border: none; }
+        .btn-primary:hover { background: linear-gradient(135deg, #5B3DE6, #7C4DEE); }
+        .btn-outline-primary { color: var(--primary); border-color: var(--primary); }
+        .btn-outline-primary:hover { background: var(--primary); color: #fff; }
+        .navbar { background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .hero-section { background: linear-gradient(135deg, #1a0533 0%, #0f172a 50%, #1a0533 100%); min-height: 100vh; display: flex; align-items: center; }
+        .glass-card { background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 2rem; }
+        .gradient-text { background: linear-gradient(135deg, var(--primary), #EC4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .feature-card { background: #fff; border-radius: 16px; padding: 2rem; border: 1px solid #E2E8F0; transition: transform 0.3s, box-shadow 0.3s; }
+        .feature-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(108,77,246,0.15); }
+        .feature-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #fff; }
+        .stat-card { background: #fff; border-radius: 16px; padding: 1.5rem; text-align: center; border: 1px solid #E2E8F0; }
+        .stat-card h3 { font-size: 2.5rem; font-weight: 800; }
+        footer { background: #0F172A; color: #94A3B8; }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html"><i class="bi bi-stars text-primary"></i> <span class="gradient-text">InfluenceAI</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="nav">
+                <ul class="navbar-nav ms-auto me-3">
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#how">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#stats">Stats</a></li>
+                </ul>
+                <a href="login.html" class="btn btn-outline-primary me-2">Sign In</a>
+                <a href="register.html" class="btn btn-primary text-white">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero-section text-white text-center">
+        <div class="container">
+            <span class="badge bg-white bg-opacity-10 text-white mb-4 px-3 py-2"><i class="bi bi-stars"></i> AI-Powered Influencer Marketing</span>
+            <h1 class="display-3 fw-bold mb-4">Connect with the<br><span class="gradient-text">Perfect Influencers</span><br>Using AI</h1>
+            <p class="lead text-white-50 mb-5 mx-auto" style="max-width:600px">Our AI engine analyzes millions of data points to match brands with influencers who drive real results. Smarter campaigns, better ROI.</p>
+            <a href="register.html" class="btn btn-primary btn-lg px-5 py-3 me-3"><i class="bi bi-rocket"></i> Start Free Trial</a>
+            <a href="login.html" class="btn btn-outline-light btn-lg px-5 py-3">View Demo</a>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section id="features" class="py-5">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h6 class="text-primary fw-bold text-uppercase"><i class="bi bi-cpu"></i> Features</h6>
+                <h2 class="display-6 fw-bold">Everything you need for <span class="gradient-text">influencer marketing</span></h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon mb-3" style="background:linear-gradient(135deg,#6C4DF6,#8B5CF6)"><i class="bi bi-robot"></i></div><h5>AI-Powered Matching</h5><p class="text-muted">ML algorithms analyze engagement, demographics, and content style to find your ideal match with 93.5% accuracy.</p></div></div>
+                <div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon mb-3" style="background:linear-gradient(135deg,#EC4899,#F472B6)"><i class="bi bi-graph-up"></i></div><h5>Real-Time Analytics</h5><p class="text-muted">Track campaign performance, engagement rates, and ROI with comprehensive dashboards.</p></div></div>
+                <div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon mb-3" style="background:linear-gradient(135deg,#3B82F6,#60A5FA)"><i class="bi bi-shield-check"></i></div><h5>Fraud Detection</h5><p class="text-muted">AI-driven analysis detects fake followers and bot engagement to protect your investment.</p></div></div>
+                <div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon mb-3" style="background:linear-gradient(135deg,#10B981,#34D399)"><i class="bi bi-lightning"></i></div><h5>Campaign Automation</h5><p class="text-muted">Automate outreach, content approval, and payment processing all in one platform.</p></div></div>
+                <div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon mb-3" style="background:linear-gradient(135deg,#F59E0B,#FBBF24)"><i class="bi bi-people"></i></div><h5>Collaboration Tools</h5><p class="text-muted">Built-in messaging, content calendars, and approval workflows keep everyone aligned.</p></div></div>
+                <div class="col-md-4"><div class="feature-card h-100"><div class="feature-icon mb-3" style="background:linear-gradient(135deg,#EF4444,#F87171)"><i class="bi bi-bar-chart"></i></div><h5>ROI Optimization</h5><p class="text-muted">AI continuously learns from campaign data to suggest budget allocation improvements.</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how" class="py-5 bg-white">
+        <div class="container py-5">
+            <div class="text-center mb-5">
+                <h6 class="text-primary fw-bold text-uppercase"><i class="bi bi-lightning"></i> How It Works</h6>
+                <h2 class="display-6 fw-bold">Launch campaigns in <span class="gradient-text">three simple steps</span></h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 text-center">
+                    <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center text-white fw-bold" style="width:64px;height:64px;background:linear-gradient(135deg,var(--primary),var(--secondary));font-size:1.5rem">1</div>
+                    <h5>Create Your Campaign</h5><p class="text-muted">Define your goals, budget, and target audience. Our AI handles the rest.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center text-white fw-bold" style="width:64px;height:64px;background:linear-gradient(135deg,var(--primary),var(--secondary));font-size:1.5rem">2</div>
+                    <h5>AI Finds Matches</h5><p class="text-muted">Our KNN model analyzes profiles to find influencers who align perfectly with your brand.</p>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center text-white fw-bold" style="width:64px;height:64px;background:linear-gradient(135deg,var(--primary),var(--secondary));font-size:1.5rem">3</div>
+                    <h5>Collaborate & Grow</h5><p class="text-muted">Manage the entire process, track results, and scale what works best.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section id="stats" class="py-5">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-6 col-md-3"><div class="stat-card"><h3 class="gradient-text">50K+</h3><p class="text-muted mb-0">Active Influencers</p></div></div>
+                <div class="col-6 col-md-3"><div class="stat-card"><h3 class="gradient-text">2,500+</h3><p class="text-muted mb-0">Brands</p></div></div>
+                <div class="col-6 col-md-3"><div class="stat-card"><h3 class="gradient-text">$120M+</h3><p class="text-muted mb-0">Campaign Revenue</p></div></div>
+                <div class="col-6 col-md-3"><div class="stat-card"><h3 class="gradient-text">93.5%</h3><p class="text-muted mb-0">ML Accuracy</p></div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4"><h5 class="text-white"><i class="bi bi-stars"></i> InfluenceAI</h5><p>AI-powered platform connecting brands with the perfect influencers.</p></div>
+                <div class="col-md-2 mb-4"><h6 class="text-white mb-3">Product</h6><ul class="list-unstyled"><li><a href="#" class="text-decoration-none text-secondary">Features</a></li><li><a href="#" class="text-decoration-none text-secondary">Pricing</a></li><li><a href="#" class="text-decoration-none text-secondary">API</a></li></ul></div>
+                <div class="col-md-2 mb-4"><h6 class="text-white mb-3">Company</h6><ul class="list-unstyled"><li><a href="#" class="text-decoration-none text-secondary">About</a></li><li><a href="#" class="text-decoration-none text-secondary">Blog</a></li><li><a href="#" class="text-decoration-none text-secondary">Careers</a></li></ul></div>
+                <div class="col-md-4 mb-4"><h6 class="text-white mb-3">Demo Accounts</h6><p class="small">Brand: brand@demo.com / Demo1234!</p><p class="small">Influencer: influencer@demo.com / Demo1234!</p></div>
+            </div>
+            <hr class="border-secondary"><p class="text-center small mb-0">&copy; 2024 InfluenceAI. Built with Flask, React, KNN ML, Gemini AI.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

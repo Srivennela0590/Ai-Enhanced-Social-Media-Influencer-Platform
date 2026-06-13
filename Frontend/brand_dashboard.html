@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brand Dashboard — InfluenceAI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    <style>
+        :root{--primary:#6C4DF6;--secondary:#8B5CF6;--bg:#F8F9FC;--text:#1E293B;--sidebar:#0F172A;}
+        body{background:var(--bg);font-family:'Segoe UI',sans-serif;}
+        .sidebar{width:260px;min-height:100vh;background:var(--sidebar);position:fixed;left:0;top:0;padding:1.5rem 1rem;z-index:100;}
+        .sidebar .nav-link{color:#94A3B8;padding:0.6rem 1rem;border-radius:10px;margin-bottom:2px;font-size:0.9rem;}
+        .sidebar .nav-link:hover,.sidebar .nav-link.active{color:#fff;background:rgba(108,77,246,0.15);}
+        .sidebar .nav-link.active{color:var(--primary);}
+        .sidebar .nav-link i{width:20px;margin-right:10px;}
+        .main-content{margin-left:260px;padding:2rem;}
+        .stat-card{background:#fff;border-radius:16px;padding:1.5rem;border:1px solid #E2E8F0;}
+        .stat-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;}
+        .gradient-text{background:linear-gradient(135deg,var(--primary),#EC4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+        .glass-card{background:#fff;border-radius:16px;padding:1.5rem;border:1px solid #E2E8F0;}
+        .prediction-result{border-radius:16px;padding:1.5rem;}
+        .badge-strong{background:rgba(16,185,129,0.1);color:#10B981;}
+        .badge-moderate{background:rgba(245,158,11,0.1);color:#F59E0B;}
+        .badge-low{background:rgba(239,68,68,0.1);color:#EF4444;}
+        @media(max-width:768px){.sidebar{display:none;}.main-content{margin-left:0;}}
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h5 class="text-white mb-4"><i class="bi bi-stars" style="color:var(--primary)"></i> <span class="gradient-text">InfluenceAI</span></h5>
+        <nav class="nav flex-column">
+            <a class="nav-link active" href="brand_dashboard.html"><i class="bi bi-grid"></i>Overview</a>
+            <a class="nav-link" href="campaign_details.html"><i class="bi bi-megaphone"></i>Campaigns</a>
+            <a class="nav-link" href="search_influencers.html"><i class="bi bi-search"></i>Find Influencers</a>
+            <a class="nav-link" href="ai_generator.html"><i class="bi bi-magic"></i>AI Generator</a>
+            <a class="nav-link" href="proposal_generator.html"><i class="bi bi-file-earmark-text"></i>Proposals</a>
+            <a class="nav-link" href="profile.html"><i class="bi bi-gear"></i>Settings</a>
+        </nav>
+        <div class="position-absolute bottom-0 start-0 p-3 w-100">
+            <button class="btn btn-sm w-100" style="background:rgba(239,68,68,0.1);color:#EF4444;border:1px solid rgba(239,68,68,0.2)" onclick="localStorage.clear();window.location.href='login.html'"><i class="bi bi-box-arrow-left"></i> Sign Out</button>
+        </div>
+    </div>
+
+    <!-- Main -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div><h4 class="fw-bold mb-1" id="welcomeText">Welcome back 👋</h4><p class="text-muted mb-0" id="companyText">Your brand overview</p></div>
+            <a href="campaign_details.html" class="btn btn-primary"><i class="bi bi-plus-lg"></i> New Campaign</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="row g-3 mb-4">
+            <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon mb-2" style="background:rgba(108,77,246,0.1);color:var(--primary)"><i class="bi bi-megaphone"></i></div><h3 class="fw-bold mb-0" id="statCampaigns">0</h3><small class="text-muted">Campaigns</small></div></div>
+            <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon mb-2" style="background:rgba(236,72,153,0.1);color:#EC4899"><i class="bi bi-people"></i></div><h3 class="fw-bold mb-0" id="statApplicants">0</h3><small class="text-muted">Applicants</small></div></div>
+            <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon mb-2" style="background:rgba(16,185,129,0.1);color:#10B981"><i class="bi bi-currency-dollar"></i></div><h3 class="fw-bold mb-0" id="statBudget">$0</h3><small class="text-muted">Total Budget</small></div></div>
+            <div class="col-6 col-lg-3"><div class="stat-card"><div class="stat-icon mb-2" style="background:rgba(59,130,246,0.1);color:#3B82F6"><i class="bi bi-handshake"></i></div><h3 class="fw-bold mb-0" id="statCollabs">0</h3><small class="text-muted">Collaborations</small></div></div>
+        </div>
+
+        <div class="row g-3 mb-4">
+            <!-- Chart -->
+            <div class="col-lg-8"><div class="glass-card"><h6 class="fw-bold mb-3">Campaign Activity</h6><canvas id="activityChart" height="200"></canvas></div></div>
+            <!-- Status Donut -->
+            <div class="col-lg-4"><div class="glass-card"><h6 class="fw-bold mb-3">Campaign Status</h6><canvas id="statusChart" height="200"></canvas></div></div>
+        </div>
+
+        <!-- ML Prediction Widget -->
+        <div class="glass-card mb-4" style="border-left:4px solid var(--primary)">
+            <h6 class="fw-bold mb-3"><i class="bi bi-robot" style="color:var(--primary)"></i> AI Match Predictor <span class="badge bg-light text-dark ms-2 fw-normal">KNN · 93.5% accuracy</span></h6>
+            <div class="row g-2 mb-3">
+                <div class="col-md-2"><label class="form-label small text-muted">Influencer Cat.</label><select class="form-select form-select-sm" id="mlInfCat"><option>Fitness</option><option>Technology</option><option>Fashion</option><option>Food</option><option>Travel</option><option>Gaming</option><option>Education</option><option>Lifestyle</option><option>Beauty</option><option>Music</option></select></div>
+                <div class="col-md-2"><label class="form-label small text-muted">Campaign Cat.</label><select class="form-select form-select-sm" id="mlCampCat"><option>Fitness</option><option>Technology</option><option>Fashion</option><option>Food</option><option>Travel</option><option>Gaming</option><option>Education</option><option>Lifestyle</option><option>Beauty</option><option>Music</option></select></div>
+                <div class="col-md-2"><label class="form-label small text-muted">Followers</label><input type="number" class="form-control form-control-sm" id="mlFollowers" value="50000"></div>
+                <div class="col-md-2"><label class="form-label small text-muted">Engagement %</label><input type="number" class="form-control form-control-sm" id="mlEngagement" value="6.5" step="0.1"></div>
+                <div class="col-md-2"><label class="form-label small text-muted">Audience Score</label><input type="number" class="form-control form-control-sm" id="mlAudience" value="85"></div>
+                <div class="col-md-2"><label class="form-label small text-muted">Prev. Perf.</label><input type="number" class="form-control form-control-sm" id="mlPrev" value="90"></div>
+            </div>
+            <button class="btn btn-primary btn-sm" onclick="runPrediction()"><i class="bi bi-lightning"></i> Predict Match</button>
+            <div id="predictionResult" class="mt-3 d-none prediction-result"></div>
+        </div>
+
+        <!-- Recent Applications -->
+        <div class="glass-card">
+            <h6 class="fw-bold mb-3">Recent Applications</h6>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="text-muted small"><tr><th>Influencer</th><th>Campaign</th><th>Rate</th><th>Status</th></tr></thead>
+                    <tbody id="applicationsTable"><tr><td colspan="4" class="text-center text-muted py-4">Loading...</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://127.0.0.1:5000';
+        const token = localStorage.getItem('influenceai_token');
+        const user = JSON.parse(localStorage.getItem('influenceai_user') || '{}');
+        if (!token) window.location.href = 'login.html';
+        document.getElementById('welcomeText').textContent = `Welcome back, ${user.firstName || 'Brand'} 👋`;
+
+        const headers = {'Content-Type':'application/json','Authorization':`Bearer ${token}`};
+
+        // Load stats
+        async function loadDashboard() {
+            try {
+                const [campRes, appRes, collabRes] = await Promise.all([
+                    fetch(`${API}/api/campaigns`, {headers}), fetch(`${API}/api/applications`, {headers}), fetch(`${API}/api/collaborations`, {headers})
+                ]);
+                const camps = (await campRes.json()).data || [];
+                const apps = (await appRes.json()).data || [];
+                const collabs = (await collabRes.json()).data || [];
+
+                document.getElementById('statCampaigns').textContent = camps.length;
+                document.getElementById('statApplicants').textContent = apps.length;
+                document.getElementById('statBudget').textContent = '$' + Math.round(camps.reduce((s,c) => s + (c.budget||0), 0)/1000) + 'K';
+                document.getElementById('statCollabs').textContent = collabs.length;
+
+                // Applications table
+                const tbody = document.getElementById('applicationsTable');
+                if (apps.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted py-4">No applications yet</td></tr>'; }
+                else { tbody.innerHTML = apps.slice(0,5).map(a => {
+                    const badge = a.status==='pending'?'bg-warning-subtle text-warning':a.status==='accepted'?'bg-success-subtle text-success':'bg-danger-subtle text-danger';
+                    return `<tr><td><strong>${a.influencerName||'Unknown'}</strong><br><small class="text-muted">${(a.influencerFollowers||0)/1000|0}K followers</small></td><td>${a.campaignTitle||''}</td><td>$${a.proposedRate||0}</td><td><span class="badge ${badge}">${a.status}</span></td></tr>`;
+                }).join(''); }
+
+                // Charts
+                const statusCounts = {active:0,draft:0,paused:0,completed:0};
+                camps.forEach(c => { if(statusCounts[c.status]!==undefined) statusCounts[c.status]++; });
+                new Chart(document.getElementById('statusChart'), {type:'doughnut',data:{labels:['Active','Draft','Paused','Completed'],datasets:[{data:[statusCounts.active,statusCounts.draft,statusCounts.paused,statusCounts.completed],backgroundColor:['#10B981','#94A3B8','#F59E0B','#6C4DF6']}]},options:{plugins:{legend:{position:'bottom',labels:{boxWidth:12}}}}});
+                new Chart(document.getElementById('activityChart'), {type:'bar',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],datasets:[{label:'Campaigns',data:[2,3,1,4,2,5,3,6,4,3,5,2],backgroundColor:'rgba(108,77,246,0.6)',borderRadius:8}]},options:{scales:{y:{beginAtZero:true}},plugins:{legend:{display:false}}}});
+            } catch(e) { console.error('Dashboard load error:', e); }
+        }
+
+        async function runPrediction() {
+            const body = {
+                influencer_category: document.getElementById('mlInfCat').value,
+                followers_count: parseInt(document.getElementById('mlFollowers').value),
+                engagement_rate: parseFloat(document.getElementById('mlEngagement').value),
+                campaign_category: document.getElementById('mlCampCat').value,
+                audience_match_score: parseInt(document.getElementById('mlAudience').value),
+                previous_performance: parseInt(document.getElementById('mlPrev').value),
+            };
+            try {
+                const res = await fetch(`${API}/api/ml/predict`, {method:'POST', headers, body:JSON.stringify(body)});
+                const data = await res.json();
+                if (data.success) {
+                    const r = data.data;
+                    const cls = r.prediction==='Strong Match'?'badge-strong':r.prediction==='Moderate Match'?'badge-moderate':'badge-low';
+                    const icon = r.prediction==='Strong Match'?'check-circle':r.prediction==='Moderate Match'?'exclamation-triangle':'x-circle';
+                    const div = document.getElementById('predictionResult');
+                    div.className = `mt-3 prediction-result ${cls}`;
+                    div.innerHTML = `<div class="d-flex align-items-center gap-3"><i class="bi bi-${icon} fs-2"></i><div><strong class="fs-5">${r.prediction}</strong><br><small>Confidence: ${r.confidence} · Score: ${r.matchScore}/100</small></div></div>`;
+                    div.classList.remove('d-none');
+                }
+            } catch(e) { alert('Prediction failed. Ensure backend is running.'); }
+        }
+
+        loadDashboard();
+    </script>
+</body>
+</html>

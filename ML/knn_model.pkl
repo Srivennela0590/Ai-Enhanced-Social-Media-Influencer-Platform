@@ -1,0 +1,4 @@
+REGENERATE_ON_FIRST_RUN
+This file is a placeholder. Run the following to generate the real artifact:
+    cd ML && python generate_models.py
+The Flask backend will also auto-generate this on first /api/ml/predict call.
